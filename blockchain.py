@@ -14,7 +14,7 @@ class Block:
         return hashlib.sha256(all_block_data.encode()).hexdigest()
     
 
-    def __str__(self):
+    def __str__(self) -> str:
         return 'block hash: ' + self.hash + '\n at index: ' + \
                 str(self.index) + ' created at: ' + self.time_span + \
                 ' data: ' + self.data + '\n previous hash: ' + self.previous_hash
@@ -25,8 +25,17 @@ class BlockChain:
         self.chain = [self.create_genesis_block()]
     
 
-    def create_genesis_block(self):
+    def create_genesis_block(self) -> Block:
         return Block(0, "01/01/2022", "Genesis Block", '0')
+    
+
+    def get_last_block(self) -> Block:
+        return self.chain[-1]
+    
+    def add_block(self, new_block: Block):
+        new_block.previous_hash = self.get_last_block().hash
+        new_block.hash = new_block.calculate_hash()
+        self.chain.append(new_block)
 
 
 def main():
