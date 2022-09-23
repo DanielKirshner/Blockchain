@@ -32,10 +32,17 @@ class BlockChain:
     def get_last_block(self) -> Block:
         return self.chain[-1]
     
+
     def add_block(self, new_block: Block):
         new_block.previous_hash = self.get_last_block().hash
         new_block.hash = new_block.calculate_hash()
         self.chain.append(new_block)
+    
+    def __str__(self):
+        chain = ''
+        for block in self.chain:
+            chain += str(block) + '\n'
+        return chain
 
 
 def main():
